@@ -18,6 +18,8 @@ const (
 // Defines values for WhichStuff.
 const (
 	Bla  WhichStuff = "bla"
+	Bla2 WhichStuff = "bla2"
+	Bla3 WhichStuff = "bla3"
 	Nope WhichStuff = "nope"
 )
 
@@ -73,8 +75,6 @@ func (t CreateStuff) AsCreateStuffBla() (CreateStuffBla, error) {
 
 // FromCreateStuffBla overwrites any union data inside the CreateStuff as the provided CreateStuffBla
 func (t *CreateStuff) FromCreateStuffBla(v CreateStuffBla) error {
-	d := WhichStuff("bla")
-	v.Which = &d
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
@@ -82,8 +82,6 @@ func (t *CreateStuff) FromCreateStuffBla(v CreateStuffBla) error {
 
 // MergeCreateStuffBla performs a merge with any union data inside the CreateStuff, using the provided CreateStuffBla
 func (t *CreateStuff) MergeCreateStuffBla(v CreateStuffBla) error {
-	d := WhichStuff("bla")
-	v.Which = &d
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -103,8 +101,6 @@ func (t CreateStuff) AsCreateStuffNope() (CreateStuffNope, error) {
 
 // FromCreateStuffNope overwrites any union data inside the CreateStuff as the provided CreateStuffNope
 func (t *CreateStuff) FromCreateStuffNope(v CreateStuffNope) error {
-	d := WhichStuff("nope")
-	v.Which = &d
 	b, err := json.Marshal(v)
 	t.union = b
 	return err
@@ -112,8 +108,6 @@ func (t *CreateStuff) FromCreateStuffNope(v CreateStuffNope) error {
 
 // MergeCreateStuffNope performs a merge with any union data inside the CreateStuff, using the provided CreateStuffNope
 func (t *CreateStuff) MergeCreateStuffNope(v CreateStuffNope) error {
-	d := WhichStuff("nope")
-	v.Which = &d
 	b, err := json.Marshal(v)
 	if err != nil {
 		return err
@@ -139,6 +133,10 @@ func (t CreateStuff) ValueByDiscriminator() (interface{}, error) {
 	}
 	switch discriminator {
 	case "bla":
+		return t.AsCreateStuffBla()
+	case "bla2":
+		return t.AsCreateStuffBla()
+	case "bla3":
 		return t.AsCreateStuffBla()
 	case "nope":
 		return t.AsCreateStuffNope()

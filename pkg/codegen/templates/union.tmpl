@@ -24,19 +24,6 @@
                                 {{$hasProperty = true -}}
                             {{end -}}
                         {{end -}}
-                        {{if not $hasProperty -}}
-                            {{$discriminatorType := (index $unionTypes $element.String) -}}
-                            {{range $discriminatorType.Schema.Properties -}}
-                                {{if eq .JsonFieldName $discriminator.Property -}}
-                                    {{if .Nullable -}}
-                                        d := {{ .Schema.GoType }}("{{$value}}")
-                                        v.{{$discriminator.PropertyName}} = &d
-                                    {{else -}}
-                                        v.{{$discriminator.PropertyName}} = {{ .Schema.GoType }}("{{$value}}")
-                                    {{end -}}
-                                {{end -}}
-                            {{end -}}
-                        {{end -}}
                     {{end -}}
                 {{end -}}
             {{end -}}
@@ -55,19 +42,6 @@
                             {{if eq .GoFieldName $discriminator.PropertyName -}}
                                 t.{{$discriminator.PropertyName}} = "{{$value}}"
                                 {{$hasProperty = true -}}
-                            {{end -}}
-                        {{end -}}
-                        {{if not $hasProperty -}}
-                            {{$discriminatorType := (index $unionTypes $element.String) -}}
-                            {{range $discriminatorType.Schema.Properties -}}
-                                {{if eq .JsonFieldName $discriminator.Property -}}
-                                    {{if .Nullable -}}
-                                        d := {{ .Schema.GoType }}("{{$value}}")
-                                        v.{{$discriminator.PropertyName}} = &d
-                                    {{else -}}
-                                        v.{{$discriminator.PropertyName}} = {{ .Schema.GoType }}("{{$value}}")
-                                    {{end -}}
-                                {{end -}}
                             {{end -}}
                         {{end -}}
                     {{end -}}
